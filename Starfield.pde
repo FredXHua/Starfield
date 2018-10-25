@@ -1,12 +1,20 @@
-NormalParticle bob = new NormalParticle();//your code here
+NormalParticle[] bob;//your code here
 void setup()
 {
-	size(640,480);//your code here
+	size(640,480);
+	bob = new NormalParticle[100];
+	for(int i=0; i<bob.length; i++){
+		bob[i] = new NormalParticle();
+	}
+
+	//your code here
 }
 void draw()
 {
-	bob.move();
-	bob.show();//y000our code here
+	for(int i=0; i<bob.length; i++){
+    bob[i].move();
+	bob[i].show();
+}
 }
 class NormalParticle
 {
