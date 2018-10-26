@@ -2,7 +2,7 @@ NormalParticle[] bob;//your code here
 void setup()
 {
 	size(640,480);
-	bob = new NormalParticle[100];
+	bob = new NormalParticle[360];
 	for(int i=0; i<bob.length; i++){
 		bob[i] = new NormalParticle();
 	}
@@ -32,7 +32,8 @@ class NormalParticle
 	}
 	void show(){
 		fill((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
-		ellipse((float)normalX,(float)normalY,2.0,2.0);
+		ellipse((float)normalX,(float)normalY,5.0,5.0);
+		noStroke();
 	}
 
 }
