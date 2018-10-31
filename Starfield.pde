@@ -1,6 +1,7 @@
 NormalParticle[] bob;
-JumboParticle fred;
-OddballParticle gay;//your code here
+JumboParticle[] fred;
+OddballParticle gay;
+OppoOdd ungay;//your code here
 void setup()
 {
 	size(640,480);
@@ -8,7 +9,13 @@ void setup()
 	for(int i=0; i<bob.length; i++){
 		bob[i] = new NormalParticle();
 	}
-	fred = new JumboParticle();	//your code here
+	fred = new JumboParticle[3];
+	for(int i = 0; i < fred.length; i++){
+		fred[i] = new JumboParticle();
+	}
+	gay = new OddballParticle();
+	ungay = new OppoOdd();	//your code here
+	rectMode(CENTER);
 }
 void draw()
 {
@@ -17,19 +24,20 @@ void draw()
     bob[i].move();
 	bob[i].show();
 }
-	fred.show();
-	fred.show();
+	for(int i=0; i<fred.length; i++){
+	fred[i].move();
+	fred[i].show();
+}
 	gay.move();
-	gay.polygon(60,60,80,6);
-
-
-
+	gay.show();
+	ungay.move();
+	ungay.show();
 }
 class NormalParticle implements Particle
 {
 	double normalX, normalY, normalSpeed, normalAngle;
 	int normalColor;
-	int opacity = 180;
+	int opacity = 200;
 	NormalParticle(){
 		normalAngle = (Math.random()*2)*(Math.PI);
 		normalSpeed = Math.random()*3.5;
@@ -52,27 +60,21 @@ interface Particle
 	public void show();
 	public void move();
 }
-class OddballParticle implements Particle//uses an interface
+class OddballParticle implements Particle
 {
-	OddballParticle()
-	public void move(){
-		pushMatrix();
-    	translate(width*0.5, height*0.5);
-  		rotate(frameCount / 200.0);
- 		polygon(60, 60, 80, 6);  // hexagon
-  		popMatrix();
+	float oddX, oddY;
+	int opacity = 160;
+	OddballParticle(){
+		oddX = oddY = 0;
 	}
-  	void polygon(float x, float y, float radius, int npoints) {
-  		float angle = TWO_PI / npoints;
-  		beginShape();
-  		for (float a = 0; a < TWO_PI; a += angle) {
-    		float sx = x + cos(a) * radius;
-    		float sy = y + sin(a) * radius;
-    		vertex(sx, sy);
-  	}		
-  		endShape(CLOSE);
-}
-
+	public void move(){
+		translate(width/2, height/2);
+		rotate(radians(frameCount));
+	}
+	public void show(){
+		fill((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256),opacity--);
+		rect(oddX, oddY, 60, 60);
+	}
 }
 class JumboParticle extends NormalParticle//uses inheritance
 {
@@ -80,16 +82,33 @@ class JumboParticle extends NormalParticle//uses inheritance
 	double jumboSpeed, jumboAngle, jumboX, jumboY;
 	JumboParticle(){
 		jumboAngle = (Math.random()*2)*(Math.PI);
-		jumboSpeed = Math.random()*1;
-	}
-	public void show(){
-		fill(23, 98, 161, opacity--);
-	    ellipse((float)normalX,(float)normalY,380.0,380.0);
-		noStroke();
+		jumboSpeed = Math.random()*3;
+		jumboX = 320;
+		jumboY = 240;
 	}
 	public void move(){
 		jumboX = jumboX + Math.cos(jumboAngle)* (jumboSpeed);
 		jumboY = jumboY + Math.sin(jumboAngle)* (jumboSpeed);
+	}	
+	public void show(){
+		fill(23, 98, 161, opacity--);
+	    ellipse((float)jumboX,(float)jumboY,380.0,380.0);
+		noStroke();
 	}
 }
-
+class OppoOdd implements Particle
+{
+	float oppoX, oppoY;
+	int opacity = 180;
+	OppoOdd(){
+		oppoX = oppoY = 0;
+	}
+	public void move(){
+		translate(width/2, height/2);
+		rotate(radians(-frameCount));
+	}
+	public void show(){
+	fill((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256),opacity--);
+	rect(oppoX, oppoY, 100, 100);
+	}
+}
