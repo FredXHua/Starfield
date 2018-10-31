@@ -5,7 +5,7 @@ OppoOdd ungay;//your code here
 void setup()
 {
 	size(640,480);
-	bob = new NormalParticle[100];
+	bob = new NormalParticle[150];
 	for(int i=0; i<bob.length; i++){
 		bob[i] = new NormalParticle();
 	}
